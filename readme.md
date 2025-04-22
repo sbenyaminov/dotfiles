@@ -12,7 +12,7 @@ Dotfiles for
 - brew install wget curl fd fzf
 
 # install languages and vim
-- brew install node nvm python java vim neovim 
+- brew install node nvm python pyenv java vim neovim 
 
 # install terminal
 - brew install git zsh tmux starship zsh-syntax-highlighting zsh-autosuggestions
@@ -27,15 +27,16 @@ Dotfiles for
 
 # Pull the repo into a new directory
 ```
-git clone into ~/dotfiles
-mkdir -p ~/.config
+git clone repo in home directory ~
 
 # symlink to ~/.config for system use
+mkdir -p ~/.config
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/tmux ~/.config/tmux
 ln -s ~/dotfiles/wezterm ~/.config/wezterm
 ln -s ~/dotfiles/starship ~/.config/starship
 
-# symlink zshrc or copy/paste into your existing zshrc
+# source dotfiles zshrc in your ~/.zshrc or use ~/dotfiles/.zshrc as your main one via symlink
+source ~/dotfiles/.zshrc
 ln -s ~/dotfiles/.zshrc ~
 ```

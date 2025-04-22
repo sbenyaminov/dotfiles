@@ -18,9 +18,9 @@ export STARSHIP_THEME="nord"
 export WEZTERM_THEME="nord"
  
 # git shortcuts
-alias ga="git add -A"
+alias ga="git add ."
 alias gs="git status"
-alias gp="git push origin main"
+alias gp="git push"
 alias gb="git branch"
 alias gl="git log --oneline"
 function gc() {
@@ -33,9 +33,11 @@ function gc() {
 
 # starship prompt init and zsh auto complete
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
-ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$(brew --prefix)/share/zsh-syntax-highlighting/highlighters
 eval "$(starship init zsh)"
+export STARSHIP_COMMAND_TIMEOUT=1000
 starship config palette $STARSHIP_THEME
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$(brew --prefix)/share/zsh-syntax-highlighting/highlighters
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES

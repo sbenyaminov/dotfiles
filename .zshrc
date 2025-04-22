@@ -58,4 +58,3 @@ if which tmux 2>&1 >/dev/null; then
     tmux attach -t main || tmux new -s main; exit
   fi
 fi
-

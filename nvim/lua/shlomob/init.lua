@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("WinClosed", {
 
             for _, win in ipairs(wins) do
                 local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
-                if not string.find(bufname, "neo%-tree") then
+                if not string.find(bufname, "neo%-tree filesystem") then
                     normal_windows = normal_windows + 1
                 end
             end

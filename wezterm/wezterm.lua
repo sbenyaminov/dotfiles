@@ -21,7 +21,12 @@ local function remap_cmd_to_ctrl()
             table.insert(keys, {
                 key = "c",
                 mods = "CMD",
-                action = wezterm.action.CopyTo("Clipboard"),
+                action = wezterm.action {
+                    Multiple = {
+                        wezterm.action.CopyTo("Clipboard"),
+                        wezterm.action.SendKey{ key = 'c', mods = 'CTRL' },
+                    }
+                }
             })
         elseif key == "v" then
             table.insert(keys, {
@@ -70,7 +75,6 @@ local function remap_cmd_to_ctrl()
         },
     })
     return keys
-
 end
 
 config.keys = remap_cmd_to_ctrl()

@@ -1,2 +1,12 @@
 logs
 plugins
+build
+.smithy-project.json
+.classpath
+.factorypath
+.project
+.settings/
+kls_database.db
+*.iml
+.vscode/
+.env

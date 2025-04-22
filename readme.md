@@ -17,6 +17,7 @@ Dotfiles for
 # install terminal
 - brew install git zsh tmux starship zsh-syntax-highlighting zsh-autosuggestions
 - brew install --cask wezterm
+- git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # if installing tmux 
 
 # Install GUI applications
 - brew install --cask visual-studio-code

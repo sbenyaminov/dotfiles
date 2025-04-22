@@ -1,6 +1,13 @@
 -- Show absolute line numbers on the left
 vim.opt.nu = true
 
+-- Use system clipboard for all operations
+vim.opt.clipboard = "unnamedplus"
+
+vim.opt.cursorline = true
+
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
 -- Show relative line numbers (useful for line-wise motions like 5j or 3k)
 vim.opt.relativenumber = true
 

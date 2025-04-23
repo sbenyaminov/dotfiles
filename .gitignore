@@ -8,5 +8,4 @@ build
 .settings/
 kls_database.db
 *.iml
-.vscode/
 .env

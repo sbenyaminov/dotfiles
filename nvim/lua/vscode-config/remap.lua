@@ -1,49 +1,47 @@
+-- TODO
+-- 1. comment shortcut
+-- 2. scripts / surround
+-- 3. multi cursor
+
+-- Load the vscode module
+local vscode = require('vscode')
+local opts = { noremap = true, silent = true }
+
 vim.g.mapleader = " "
 -- no timeout for leader key commands
-vim.o.timeout = false
+vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 -- clear highlights
 vim.keymap.set('n', '<Esc>', ':noh<CR>')
 
--- VSCode-specific commands
-vim.keymap.set('n', '<leader>pv', "<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>")
+-- undo/REDO via vscode since neovim buffer and vscode buffer get out of sync
+vim.keymap.set("n", "u", function() vscode.call('undo') end)
+vim.keymap.set("n", "<C-r>", function() vscode.call('redo') end)
+
+vim.keymap.set('n', '<leader>e', function() vscode.call('workbench.action.toggleSidebarVisibility') end, opts)
+vim.keymap.set('n', '<leader>t', function() vscode.call('workbench.action.togglePanel') end, opts)
 
 -- reformat the entire file
-vim.keymap.set("n", "<leader>=", "<Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>", { desc = "Reformat whole file" })
+vim.keymap.set("n", "<leader>=", function() vscode.call('editor.action.formatDocument') end)
 
--- moves selected lines up and down (using VSCode commands)
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<A-j>", "<Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>", opts)
-vim.keymap.set("n", "<A-k>", "<Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>", opts)
-vim.keymap.set("v", "<A-j>", "<Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>", opts)
-vim.keymap.set("v", "<A-k>", "<Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>", opts)
-vim.keymap.set("i", "<A-j>", "<Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>", opts)
-vim.keymap.set("i", "<A-k>", "<Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>", opts)
+-- Move selected line(s) up/down in visual mode
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", opts)
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", opts)
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Increment/decrement numbers
 vim.keymap.set('n', '<leader>+', '<C-a>', opts) -- increment
 vim.keymap.set('n', '<leader>-', '<C-x>', opts) -- decrement
 
 -- window remaps (using VSCode commands)
-vim.keymap.set('n', '<leader>wg', "<Cmd>call VSCodeNotify('workbench.action.splitEditorRight')<CR>", opts)
-vim.keymap.set('n', '<leader>wv', "<Cmd>call VSCodeNotify('workbench.action.splitEditorDown')<CR>", opts)
-vim.keymap.set('n', '<leader>w=', "<Cmd>call VSCodeNotify('workbench.action.evenEditorWidths')<CR>", opts)
-vim.keymap.set('n', '<leader>wx', "<Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>", opts)
-
--- Navigate between splits using Alt+hjkl (using VSCode commands)
-vim.keymap.set('n', '<A-h>', "<Cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>", opts)
-vim.keymap.set('n', '<A-j>', "<Cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>", opts)
-vim.keymap.set('n', '<A-k>', "<Cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>", opts)
-vim.keymap.set('n', '<A-l>', "<Cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>", opts)
-
--- Buffers/Tabs (using VSCode commands)
-vim.keymap.set('n', '<leader>bn', "<Cmd>call VSCodeNotify('workbench.action.nextEditor')<CR>", opts)
-vim.keymap.set('n', '<leader>bp', "<Cmd>call VSCodeNotify('workbench.action.previousEditor')<CR>", opts)
-vim.keymap.set('n', '<leader>to', "<Cmd>call VSCodeNotify('workbench.action.files.newUntitledFile')<CR>", opts)
-vim.keymap.set('n', '<leader>tx', "<Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>", opts)
-vim.keymap.set('n', '<leader>tn', "<Cmd>call VSCodeNotify('workbench.action.nextEditor')<CR>", opts)
-vim.keymap.set('n', '<leader>tp', "<Cmd>call VSCodeNotify('workbench.action.previousEditor')<CR>", opts)
+vim.keymap.set('n', '<leader>wg', function() vscode.call('workbench.action.splitEditorRight') end, opts)
+vim.keymap.set('n', '<leader>wv', function() vscode.call('workbench.action.splitEditorDown') end, opts)
+vim.keymap.set('n', '<leader>w=', function() vscode.call('workbench.action.evenEditorWidths') end, opts)
+vim.keymap.set('n', '<leader>wx', function() vscode.call('workbench.action.closeActiveEditor') end, opts)
 
 -- Automatically center the cursor after certain actions
 vim.keymap.set("n", "J", "mzJ`z")
@@ -69,14 +67,47 @@ vim.keymap.set('v', 'p', '"_dP', opts)
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
--- Format the current file (using VSCode command)
-vim.keymap.set("n", "<leader>fd", "<Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>")
+-- Save file with Command+S (using VSCode command)
+vim.keymap.set("n", "<C-s>", function() vscode.call('workbench.action.files.save') end)
 
--- Search and replace the current word (using VSCode command)
-vim.keymap.set("n", "<leader>rw", "<Cmd>call VSCodeNotify('editor.action.startFindReplaceAction')<CR>")
-
--- Save file with Ctrl+S (using VSCode command)
-vim.keymap.set("n", "<C-s>", "<Cmd>call VSCodeNotify('workbench.action.files.save')<CR>")
-
--- Disable the Q key in normal mode 
+-- Disable the Q key in normal mode
 vim.keymap.set("n", "Q", "<nop>")
+
+-- Telescope equivalent commands
+-- Find files
+vim.keymap.set('n', '<leader>ff', function() vscode.call('workbench.action.quickOpen') end, { desc = 'Find Files' })
+-- Fuzzy search (live grep)
+vim.keymap.set('n', '<leader>ss', function() vscode.call('workbench.action.findInFiles') end,
+    { desc = 'Search in Files' })
+-- Diagnostics
+vim.keymap.set('n', '<leader>sd', function() vscode.call('workbench.actions.view.problems') end,
+    { desc = 'Show Diagnostics' })
+-- Recent files
+vim.keymap.set('n', '<leader>rr', function() vscode.call('workbench.action.openRecent') end, { desc = 'Recent Files' })
+-- Git files
+vim.keymap.set('n', '<leader>gg', function() vscode.call('workbench.view.scm') end, { desc = 'Git Files' })
+-- Buffers
+vim.keymap.set('n', '<leader>bb', function() vscode.call('workbench.action.showAllEditorsByMostRecentlyUsed') end,
+    { desc = 'Show Buffers' })
+-- Help tags
+vim.keymap.set('n', '<leader>hh', function() vscode.call('workbench.action.openDocumentationUrl') end,
+    { desc = 'Help Documentation' })
+-- Search current word
+vim.keymap.set('n', '<leader>fw', function()
+    vscode.call('editor.action.addSelectionToNextFindMatch')
+    vscode.call('workbench.action.findInFiles')
+end, { desc = 'Find Word Under Cursor' })
+
+-- Navigation
+vim.keymap.set('n', 'gd', function() vscode.call('editor.action.revealDefinition') end, opts)
+vim.keymap.set('n', 'gr', function() vscode.call('editor.action.referenceSearch.trigger') end, opts)
+vim.keymap.set('n', 'gi', function() vscode.call('editor.action.goToImplementation') end, opts)
+
+-- Quick Fix & Refactor
+vim.keymap.set('n', '<leader>.', function() vscode.call('editor.action.quickFix') end, opts)
+vim.keymap.set('n', 'rn', function() vscode.call('editor.action.rename') end, opts)
+vim.keymap.set('n', 'rf', function() vscode.call('editor.action.refactor') end, opts)
+
+-- Hover & Actions
+vim.keymap.set('n', 'K', function() vscode.call('editor.action.showHover') end, opts)
+vim.keymap.set('n', 'ca', function() vscode.call('editor.action.showContextMenu') end, opts)

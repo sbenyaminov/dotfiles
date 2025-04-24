@@ -19,5 +19,9 @@
   },
   "terminal.integrated.allowChords": false,
   "terminal.integrated.gpuAcceleration": "on",
-  "terminal.integrated.shellIntegration.enabled": true
+  "terminal.integrated.shellIntegration.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[lua]": {
+    "editor.defaultFormatter": "sumneko.lua"
+  },
 }

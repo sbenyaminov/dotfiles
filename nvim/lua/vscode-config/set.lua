@@ -21,6 +21,9 @@ vim.opt.scrolloff = 15
 -- Decrease time before CursorHold events trigger
 vim.opt.updatetime = 50
 
+vim.o.splitbelow = true -- force all horizontal splits to go below current window
+vim.o.splitright = true -- force all vertical splits to go to the right of current windo
+
 -- Highlight on yank (this still works in VSCode mode)
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {

@@ -1,5 +1,4 @@
 -- TODO
--- 1. comment shortcut
 -- 2. scripts / surround
 -- 3. multi cursor
 
@@ -15,9 +14,7 @@ vim.o.timeoutlen = 300
 -- clear highlights
 vim.keymap.set('n', '<Esc>', ':noh<CR>')
 
--- undo/REDO via vscode since neovim buffer and vscode buffer get out of sync
 vim.keymap.set("n", "u", function() vscode.call('undo') end)
-vim.keymap.set("n", "<C-r>", function() vscode.call('redo') end)
 
 vim.keymap.set('n', '<leader>e', function() vscode.call('workbench.action.toggleSidebarVisibility') end, opts)
 vim.keymap.set('n', '<leader>t', function() vscode.call('workbench.action.togglePanel') end, opts)
@@ -45,8 +42,6 @@ vim.keymap.set('n', '<leader>wx', function() vscode.call('workbench.action.close
 
 -- Automatically center the cursor after certain actions
 vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
@@ -66,9 +61,6 @@ vim.keymap.set('v', 'p', '"_dP', opts)
 -- Stay in indent mode
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
-
--- Save file with Command+S (using VSCode command)
-vim.keymap.set("n", "<C-s>", function() vscode.call('workbench.action.files.save') end)
 
 -- Disable the Q key in normal mode
 vim.keymap.set("n", "Q", "<nop>")

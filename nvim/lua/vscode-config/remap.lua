@@ -98,7 +98,9 @@ vim.keymap.set('n', 'gi', function() vscode.call('editor.action.goToImplementati
 -- Quick Fix & Refactor
 vim.keymap.set('n', '<leader>.', function() vscode.call('editor.action.quickFix') end, opts)
 vim.keymap.set('n', 'rn', function() vscode.call('editor.action.rename') end, opts)
+vim.keymap.set('v', 'rn', function() vscode.call('editor.action.rename') end, opts)
 vim.keymap.set('n', 'rf', function() vscode.call('editor.action.refactor') end, opts)
+vim.keymap.set('v', 'rf', function() vscode.call('editor.action.refactor') end, opts)
 
 -- Hover & Actions
 vim.keymap.set('n', 'K', function() vscode.call('editor.action.showHover') end, opts)

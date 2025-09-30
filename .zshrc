@@ -36,6 +36,7 @@ function gc() {
     echo "Error: You must provide exactly one commit message"
   fi
 }
+alias gca="git commit --amend"
 
 # starship prompt init and zsh auto complete
 if [ "$isVSCode" = true ]; then
@@ -55,6 +56,9 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+# fzf key bindings (Ctrl+R for history search, etc.)
+source <(fzf --zsh)
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

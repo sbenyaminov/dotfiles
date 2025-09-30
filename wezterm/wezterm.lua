@@ -17,18 +17,18 @@ local function remap_cmd_to_ctrl()
         local key = string.char(i)
 
         -- Keep native Cmd+C and Cmd+V behavior for copy/paste
-        if key == "c" then
-            table.insert(keys, {
-                key = "c",
-                mods = "CMD",
-                action = wezterm.action {
-                    Multiple = {
-                        wezterm.action.CopyTo("Clipboard"),
-                        wezterm.action.SendKey{ key = 'c', mods = 'CTRL' },
-                    }
-                }
-            })
-        elseif key == "v" then
+        -- if key == "c" then
+        --     table.insert(keys, {
+        --         key = "c",
+        --         mods = "CMD",
+        --         action = wezterm.action {
+        --             Multiple = {
+        --                 wezterm.action.CopyTo("Clipboard"),
+        --                 wezterm.action.SendKey{ key = 'c', mods = 'CTRL' },
+        --             }
+        --         }
+        --     })
+        if key == "v" then
             table.insert(keys, {
                 key = "v",
                 mods = "CMD",
@@ -74,6 +74,32 @@ local function remap_cmd_to_ctrl()
             mods = 'ALT',
         },
     })
+
+    -- Shift+Enter to insert newline (for multi-line commands)
+    table.insert(keys, {
+        key = 'Enter',
+        mods = 'SHIFT',
+        action = wezterm.action.SendString '\n',
+    })
+
+    -- Cmd+f to enter tmux copy mode and search upwards
+    table.insert(keys, {
+        key = 'f',
+        mods = 'CMD',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = '[' },
+            wezterm.action.SendKey { key = 'r', mods = 'CTRL' },
+        },
+    })
+
+    -- Cmd+r to search command history with fzf
+    table.insert(keys, {
+        key = 'r',
+        mods = 'CMD',
+        action = wezterm.action.SendString '\x12',
+    })
+
     return keys
 end
 

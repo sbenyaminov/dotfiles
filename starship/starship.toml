@@ -12,6 +12,7 @@ $rust\
 $ruby\
 $aws\
 $docker_context\
+$kubernetes\
 $jobs\
 $cmd_duration\
 $line_break\
@@ -94,6 +95,12 @@ format = '[$symbol]($style) $path'
 detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_extensions = ['Dockerfile']
 
+[kubernetes]
+symbol = '☸ '
+style = 'cyan bold'
+format = '[$symbol$context( \($namespace\))]($style) '
+disabled = false
+
 [jobs]
 symbol = ' '
 style = 'red'
@@ -130,3 +137,17 @@ yellow='#e5c07b'
 gray='#828997'
 white ='#abb2bf'
 black='#2c323c'
+
+[memory_usage]
+disabled = false
+threshold = -1
+symbol = '󰍛 '
+style = 'bold fg:purple'
+format = '[$symbol${ram}]($style) '
+
+[custom.cpu_usage]
+command = "top -l 1 | grep 'CPU usage' | awk '{print $3}' | sed 's/%//' || echo '0'"
+when = true
+symbol = '󰘚 '
+style = 'bold fg:orange'
+format = '[$symbol$output%]($style) '

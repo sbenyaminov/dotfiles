@@ -104,4 +104,18 @@ local function remap_cmd_to_ctrl()
 end
 
 config.keys = remap_cmd_to_ctrl()
+config.mouse_bindings = {
+    -- CMD-click will open the link under the mouse cursor
+    {
+      event = { Up = { streak = 1, button = 'Left' } },
+      mods = 'SHIFT',
+      action = wezterm.action.DisableDefaultAssignment,
+    },
+    {
+      event = { Up = { streak = 1, button = 'Left' } },
+      mods = 'CMD',
+      action = wezterm.action.OpenLinkAtMouseCursor,
+    },
+}
+
 return config

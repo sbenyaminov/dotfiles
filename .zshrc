@@ -9,9 +9,27 @@ alias nvimcfg='cd ~/.config && nvim .'
 alias zshrc='nvim ~/.zshrc'
 alias srcz='source ~/.zshrc'
 alias ll="ls -la --color=auto"
-alias fcd='cd "$(dirname "$(fzf)")"'
 alias dsk='cd ~/Desktop'
 alias cfg='cd ~/.config'
+alias k=kubectl
+
+# Function to cd to directory (fcd keeps your current behavior)
+function fcd() {
+  local file
+  file=$(fzf)
+  if [ -n "$file" ]; then
+    cd "$(dirname "$file")"
+  fi
+}
+
+# Function to find a file with fzf and cd to its directory
+function ff() {
+  local file
+  file=$(eval "fd --type f $FD_OPTIONS" | fzf)
+  if [ -n "$file" ]; then
+    cd "$(dirname "$file")"
+  fi
+}
 
 # Use Neovim as default editor
 # export EDITOR="nvim" stops wezterm from using vim in cli
@@ -56,6 +74,14 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+# fd configuration - exclude noisy directories globally
+export FD_OPTIONS="--hidden --follow --exclude .git --exclude node_modules --exclude 'bazel-*' --exclude build --exclude dist --exclude target --exclude .next --exclude .cache --exclude .idea --exclude .vscode --exclude coverage --exclude __pycache__ --exclude .DS_Store --exclude .pytest_cache --exclude .mypy_cache --exclude .ruff_cache --exclude .tox --exclude venv --exclude .venv --exclude site-packages --exclude .gradle --exclude .m2 --exclude .ivy2 --exclude pkg/mod --exclude vendor --exclude .terraform --exclude .svn --exclude .hg"
+
+# fzf configuration - use fd as the default command
+export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTIONS"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 
 # fzf key bindings (Ctrl+R for history search, etc.)
 source <(fzf --zsh)

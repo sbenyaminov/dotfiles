@@ -11,7 +11,17 @@ alias srcz='source ~/.zshrc'
 alias ll="ls -la --color=auto"
 alias dsk='cd ~/Desktop'
 alias cfg='cd ~/.config'
+
+# shortcuts for specific technologies, e.g. k8, bazel, go
 alias k=kubectl
+alias got="go test ./..."
+function gob() {
+  name="$1"
+  shift
+  go build -o "$name" "$@"
+}
+alias bzltest="bazel test ... --verbose_test_summary=true --verbose_failures=true --test_output=all"
+alias bzlbuild="bazel build ..."
 
 # Function to cd to directory (fcd keeps your current behavior)
 function fcd() {

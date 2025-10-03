@@ -41,8 +41,8 @@ vim.keymap.set('n', '<leader>wj', ':wincmd j<CR>', opts)
 vim.keymap.set('n', '<leader>wh', ':wincmd h<CR>', opts)
 vim.keymap.set('n', '<leader>wl', ':wincmd l<CR>', opts)
 -- Buffers
-vim.keymap.set('n', '<leader>bn', ':bnext', opts)        -- next buffer
-vim.keymap.set('n', '<leader>bp', ':bprev', opts)        -- prev buffer
+vim.keymap.set('n', 'L', ':bnext<CR>', opts)        -- next buffer
+vim.keymap.set('n', 'H', ':bprev<CR>', opts)        -- prev buffer
 -- Tabs
 vim.keymap.set('n', '<leader>to', ':tabnew<CR>', opts)   -- open new tab
 vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', opts) -- close current tab
@@ -57,8 +57,8 @@ vim.keymap.set("n", "n", "nzzzv")       -- Search for the next match and center 
 vim.keymap.set("n", "N", "Nzzzv")       -- Search for the previous match and center the screen
 
 -- Quick jump to next/previous error in the quickfix list
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz") -- Go to next error in quickfix and center the screen
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz") -- Go to previous error in quickfix and center the screen
+vim.keymap.set("n", "<A-n>", "<cmd>cnext<CR>zz") -- Go to next error in quickfix and center the screen
+vim.keymap.set("n", "<A-p>", "<cmd>cprev<CR>zz") -- Go to previous error in quickfix and center the screen
 
 -- Copy content to the system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- Copy selected text to system clipboard

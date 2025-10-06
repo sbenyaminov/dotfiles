@@ -79,7 +79,7 @@ local function remap_cmd_to_ctrl()
     table.insert(keys, {
         key = 'Enter',
         mods = 'SHIFT',
-        action = wezterm.action.SendString '\n',
+        action = wezterm.action.SendString '\x1b\r',
     })
 
     -- Cmd+f to enter tmux copy mode and search upwards
@@ -107,14 +107,14 @@ config.keys = remap_cmd_to_ctrl()
 config.mouse_bindings = {
     -- CMD-click will open the link under the mouse cursor
     {
-      event = { Up = { streak = 1, button = 'Left' } },
-      mods = 'SHIFT',
-      action = wezterm.action.DisableDefaultAssignment,
+        event = { Up = { streak = 1, button = 'Left' } },
+        mods = 'SHIFT',
+        action = wezterm.action.DisableDefaultAssignment,
     },
     {
-      event = { Up = { streak = 1, button = 'Left' } },
-      mods = 'CMD',
-      action = wezterm.action.OpenLinkAtMouseCursor,
+        event = { Up = { streak = 1, button = 'Left' } },
+        mods = 'CMD',
+        action = wezterm.action.OpenLinkAtMouseCursor,
     },
 }
 

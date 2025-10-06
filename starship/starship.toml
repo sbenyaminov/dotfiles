@@ -138,15 +138,15 @@ gray='#828997'
 white ='#abb2bf'
 black='#2c323c'
 
-[memory_usage]
-disabled = false
-threshold = -1
+[custom.memory_usage]
+command = "memory_pressure | grep 'System-wide memory free percentage' | awk '{print 100 - $5}' | sed 's/%//' || echo '0'"
+when = true
 symbol = '󰍛 '
 style = 'bold fg:purple'
-format = '[$symbol${ram}]($style) '
+format = '[$symbol$output%]($style) '
 
 [custom.cpu_usage]
-command = "top -l 1 | grep 'CPU usage' | awk '{print $3}' | sed 's/%//' || echo '0'"
+command = "top -l 1 | grep 'CPU usage' | awk '{printf \"%.1f\", 100 - $7}' || echo '0'"
 when = true
 symbol = '󰘚 '
 style = 'bold fg:orange'

@@ -20,6 +20,7 @@ config = {
     enable_tab_bar = true,
     scrollback_lines = 10000,
     enable_scroll_bar = true,
+    default_prog = { "/bin/zsh", "-l", "-c", "tmux attach -t main || tmux new -s main; exec zsh -l" },
     window_padding = {
         left = 3,
         right = 3,

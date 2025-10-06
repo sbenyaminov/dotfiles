@@ -96,6 +96,9 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 # fzf key bindings (Ctrl+R for history search, etc.)
 source <(fzf --zsh)
 
+# Custom keybinding: Esc+h to search directories from home directory
+bindkey -s '^[h' 'cd $(fd --type d --hidden --follow --exclude .git --exclude node_modules --exclude "bazel-*" --exclude build --exclude dist --exclude target --exclude .next --exclude .cache --exclude .idea --exclude .vscode --exclude coverage --exclude __pycache__ --exclude .DS_Store --exclude .pytest_cache --exclude .mypy_cache --exclude .ruff_cache --exclude .tox --exclude venv --exclude .venv --exclude site-packages --exclude .gradle --exclude .m2 --exclude .ivy2 --exclude pkg/mod --exclude vendor --exclude .terraform --exclude .svn --exclude .hg . ~ | fzf)\n'
+
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
@@ -103,14 +106,3 @@ eval "$(pyenv init --path)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-# Always work in a tmux session if Tmux is installed except for vscode
-if [ "$isVSCode" = false ]; then
-  if which tmux 2>&1 >/dev/null; then
-    if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
-        # Use "main" session for regular terminals
-        tmux attach -t main || tmux new -s main; exit
-    fi
-  fi
-fi

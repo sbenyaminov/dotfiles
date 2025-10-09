@@ -23,21 +23,40 @@ function gob() {
 alias bzltest="bazel test ... --verbose_test_summary=true --verbose_failures=true --test_output=all"
 alias bzlbuild="bazel build ..."
 
-# Function to cd to directory (fcd keeps your current behavior)
-function fcd() {
+# Find functions with fzf
+# ff - find file and cd to its directory (current dir)
+function ff() {
   local file
-  file=$(fzf)
-  if [ -n "$file" ]; then
-    cd "$(dirname "$file")"
+  file=$(eval "command fd --type f $FD_OPTIONS ." | fzf --exact --no-sort --keep-right)
+  if [[ -n "$file" ]]; then
+    cd "$(dirname "$file")" || return
   fi
 }
 
-# Function to find a file with fzf and cd to its directory
-function ff() {
+# fd - find directory and cd into it (current dir) - NOTE: overrides fd binary but we use it via command fd
+function fd() {
+  local dir
+  dir=$(eval "command fd --type d $FD_OPTIONS ." | fzf --exact --no-sort --keep-right)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return
+  fi
+}
+
+# ffh - find file and cd to its directory (home dir)
+function ffh() {
   local file
-  file=$(eval "fd --type f $FD_OPTIONS" | fzf)
-  if [ -n "$file" ]; then
-    cd "$(dirname "$file")"
+  file=$(eval "command fd --type f $FD_OPTIONS . ~" | fzf --exact --no-sort --keep-right)
+  if [[ -n "$file" ]]; then
+    cd "$(dirname "$file")" || return
+  fi
+}
+
+# fdh - find directory and cd into it (home dir)
+function fdh() {
+  local dir
+  dir=$(eval "command fd --type d $FD_OPTIONS . ~" | fzf --exact --no-sort --keep-right)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return
   fi
 }
 
@@ -87,7 +106,7 @@ ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 
 # fd configuration - exclude noisy directories globally
-export FD_OPTIONS="--hidden --follow --exclude .git --exclude node_modules --exclude 'bazel-*' --exclude build --exclude dist --exclude target --exclude .next --exclude .cache --exclude .idea --exclude .vscode --exclude coverage --exclude __pycache__ --exclude .DS_Store --exclude .pytest_cache --exclude .mypy_cache --exclude .ruff_cache --exclude .tox --exclude venv --exclude .venv --exclude site-packages --exclude .gradle --exclude .m2 --exclude .ivy2 --exclude pkg/mod --exclude vendor --exclude .terraform --exclude .svn --exclude .hg"
+export FD_OPTIONS="--hidden --follow --exclude .git --exclude node_modules --exclude 'bazel-*' --exclude build --exclude dist --exclude target --exclude .next --exclude .cache --exclude .idea --exclude .vscode --exclude coverage --exclude __pycache__ --exclude .DS_Store --exclude .pytest_cache --exclude .mypy_cache --exclude .ruff_cache --exclude .tox --exclude venv --exclude .venv --exclude site-packages --exclude .gradle --exclude .m2 --exclude .ivy2 --exclude pkg/mod --exclude vendor --exclude .terraform --exclude .svn --exclude .hg --exclude .npm --exclude .yarn --exclude .pnpm-store --exclude bower_components --exclude out --exclude tmp --exclude temp --exclude .turbo --exclude .nuxt --exclude .output --exclude .vercel --exclude .netlify --exclude .aws-sam --exclude .serverless"
 
 # fzf configuration - use fd as the default command
 export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTIONS"
@@ -96,9 +115,6 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 
 # fzf key bindings (Ctrl+R for history search, etc.)
 source <(fzf --zsh)
-
-# Custom keybinding: Esc+h to search directories from home directory
-bindkey -s '^[h' 'cd $(fd --type d --hidden --follow --exclude .git --exclude node_modules --exclude "bazel-*" --exclude build --exclude dist --exclude target --exclude .next --exclude .cache --exclude .idea --exclude .vscode --exclude coverage --exclude __pycache__ --exclude .DS_Store --exclude .pytest_cache --exclude .mypy_cache --exclude .ruff_cache --exclude .tox --exclude venv --exclude .venv --exclude site-packages --exclude .gradle --exclude .m2 --exclude .ivy2 --exclude pkg/mod --exclude vendor --exclude .terraform --exclude .svn --exclude .hg . ~ | fzf)\n'
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

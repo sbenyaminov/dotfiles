@@ -57,6 +57,7 @@ alias gs="git status"
 alias gp="git push"
 alias gb="git branch"
 alias gl="git log --oneline"
+alias gpush='git push origin $(git branch --show-current)'
 function gc() {
   if [ "$#" -eq 1 ]; then
     git commit -m "$1"

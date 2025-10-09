@@ -12,7 +12,7 @@ config.color_scheme = themes["nord"]
 local function remap_cmd_to_ctrl()
     local keys = {}
 
-    -- Loop through printable characters
+    -- Loop through printable characters - remap CMD to CTRL
     for i = 32, 126 do
         local key = string.char(i)
 
@@ -42,9 +42,19 @@ local function remap_cmd_to_ctrl()
             })
         end
     end
+
+    -- Also remap CMD+SHIFT to CTRL+SHIFT for all printable characters
+    for i = 32, 126 do
+        local key = string.char(i)
+        table.insert(keys, {
+            key = key,
+            mods = "CMD|SHIFT",
+            action = wezterm.action.SendKey { key = key, mods = "CTRL|SHIFT" },
+        })
+    end
     -- Add common non-printable keys
     local special_keys = {
-        "Tab", "Enter", "Escape", "Backspace",
+        "Shift", "Tab", "Enter", "Escape", "Backspace",
         "LeftArrow", "RightArrow", "UpArrow", "DownArrow",
         "PageUp", "PageDown", "Home", "End",
         "Insert", "Delete", "Space"
@@ -88,8 +98,8 @@ local function remap_cmd_to_ctrl()
         mods = 'CMD',
         action = wezterm.action.Multiple {
             wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
-            wezterm.action.SendKey { key = '[' },
-            wezterm.action.SendKey { key = 'r', mods = 'CTRL' },
+            wezterm.action.SendKey { key = '[', mods = 'NONE' },
+            wezterm.action.SendKey { key = '?', mods = 'NONE' },
         },
     })
 
@@ -98,6 +108,48 @@ local function remap_cmd_to_ctrl()
         key = 'r',
         mods = 'CMD',
         action = wezterm.action.SendString '\x12',
+    })
+
+    -- Cmd+Shift+[ (Cmd+{) to move to previous tmux window (Ctrl+a then p)
+    table.insert(keys, {
+        key = '{',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'p', mods = 'NONE' },
+        },
+    })
+
+    -- Cmd+Shift+] (Cmd+}) to move to next tmux window (Ctrl+a then n)
+    table.insert(keys, {
+        key = '}',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'n', mods = 'NONE' },
+        },
+    })
+
+    -- Cmd+t (Ctrl+t) to create new tmux window and prompt for name (Ctrl+a then c, then Ctrl+a ,)
+    table.insert(keys, {
+        key = 't',
+        mods = 'CMD',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'c', mods = 'NONE' },
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = ',', mods = 'NONE' },
+        },
+    })
+
+    -- Cmd+w (Ctrl+w) to close current tmux pane (Ctrl+a then x)
+    table.insert(keys, {
+        key = 'w',
+        mods = 'CMD',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'x', mods = 'NONE' },
+        },
     })
 
     return keys

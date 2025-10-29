@@ -13,6 +13,7 @@ alias dsk='cd ~/Desktop'
 alias cfg='cd ~/.config'
 
 # shortcuts for specific technologies, e.g. k8, bazel, go
+alias claudeyolo="claude --dangerously-skip-permissions"
 alias k=kubectl
 alias got="go test ./..."
 function gob() {
@@ -71,11 +72,12 @@ export STARSHIP_THEME="nord"
 export WEZTERM_THEME="nord"
  
 # git shortcuts
-alias ga="git add ."
+alias ga="git add -A"
 alias gs="git status"
 alias gp="git push"
 alias gb="git branch"
 alias gl="git log --oneline"
+alias gcm="git checkout main"
 alias gpush='git push origin $(git branch --show-current)'
 function gc() {
   if [ "$#" -eq 1 ]; then

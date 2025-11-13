@@ -74,7 +74,7 @@ export WEZTERM_THEME="nord"
 # git shortcuts
 alias ga="git add -A"
 alias gs="git status"
-alias gp="git push"
+alias gpull="git pull"
 alias gb="git branch"
 alias gl="git log --oneline"
 alias gcm="git checkout main"

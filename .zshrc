@@ -76,7 +76,7 @@ alias ga="git add -A"
 alias gs="git status"
 alias gpull="git pull"
 alias gb="git branch"
-alias gl="git log --oneline"
+alias gl="git log --oneline -n 50"
 alias gcm="git checkout main"
 alias gpush='git push origin $(git branch --show-current)'
 function gc() {

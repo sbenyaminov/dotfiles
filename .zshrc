@@ -78,7 +78,7 @@ alias gs="git status"
 alias gpull="git pull origin $(git branch --show-current)"
 alias gb="git branch"
 alias gl="git log --oneline -n 50"
-alias gcm="git checkout main"
+alias gcm="git checkout main 2>/dev/null || git checkout master"
 alias gpush='git push origin $(git branch --show-current)'
 function gc() {
   if [ "$#" -eq 1 ]; then

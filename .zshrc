@@ -72,9 +72,10 @@ export STARSHIP_THEME="nord"
 export WEZTERM_THEME="nord"
  
 # git shortcuts
+alias lg="lazygit"
 alias ga="git add -A"
 alias gs="git status"
-alias gpull="git pull"
+alias gpull="git pull origin $(git branch --show-current)"
 alias gb="git branch"
 alias gl="git log --oneline -n 50"
 alias gcm="git checkout main"
@@ -87,6 +88,19 @@ function gc() {
   fi
 }
 alias gca="git commit --amend"
+function gitcompare() {
+  if [ $# -lt 3 ]; then
+    echo "Usage: gitcompare <commit-a> <commit-b> <dir>"
+    return 1
+  fi
+
+  local commit_a="$1"
+  local commit_b="$2"
+  local dir="$3"
+
+  git log --oneline "${commit_a}..${commit_b}" -- "$dir"
+}
+
 
 # starship prompt init and zsh auto complete
 if [ "$isVSCode" = true ]; then

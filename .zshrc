@@ -75,7 +75,10 @@ export WEZTERM_THEME="nord"
 alias lg="lazygit"
 alias ga="git add -A"
 alias gs="git status"
-alias gpull="git pull origin $(git branch --show-current)"
+alias gpull="git pull"
+rt SSH_AUTH_SOCK=$(launchctl getenv SSH_AUTH_SOCK)
+export SSH_AUTH_SOCK=$(lsof -U -a -c ssh-agent 2>/dev/null | grep Listeners | awk '{print $NF}' | head -1)
+
 alias gb="git branch"
 alias gl="git log --oneline -n 50"
 alias gcm="git checkout main 2>/dev/null || git checkout master"

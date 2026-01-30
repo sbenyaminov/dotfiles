@@ -152,6 +152,36 @@ local function remap_cmd_to_ctrl()
         },
     })
 
+    -- Cmd+Shift+t to create new tmux session
+    table.insert(keys, {
+        key = 't',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'S', mods = 'SHIFT' },
+        },
+    })
+
+    -- Cmd+Shift+w to kill tmux session
+    table.insert(keys, {
+        key = 'w',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 'X', mods = 'SHIFT' },
+        },
+    })
+
+    -- Cmd+Shift+s for session picker
+    table.insert(keys, {
+        key = 's',
+        mods = 'CMD|SHIFT',
+        action = wezterm.action.Multiple {
+            wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
+            wezterm.action.SendKey { key = 's', mods = 'NONE' },
+        },
+    })
+
     return keys
 end
 

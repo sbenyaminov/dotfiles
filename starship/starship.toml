@@ -3,23 +3,16 @@ $directory\
 $git_branch\
 $git_status\
 $fill\
-$python\
-$lua\
-$nodejs\
-$golang\
-$haskell\
-$rust\
-$ruby\
-$aws\
-$docker_context\
 $kubernetes\
 $jobs\
+$time\
 $cmd_duration\
 $line_break\
 $character"""
 
 add_newline = true
 palette = "nord"
+command_timeout = 2000
 
 [directory]
 style = 'bold fg:dark_blue'
@@ -28,72 +21,16 @@ truncation_length = 3
 truncation_symbol = '…/'
 truncate_to_repo = false
 
-# [directory.substitutions]
-# 'Documents' = '󰈙'
-# 'Downloads' = ' '
-# 'Music' = ' '
-# 'Pictures' = ' '
-
 [git_branch]
 style = 'fg:green'
-symbol = ' '
+symbol = ' '
 format = '[on](white) [$symbol$branch ]($style)'
 
 [git_status]
-style = 'fg:red'
-format = '([$all_status$ahead_behind]($style) )'
+disabled = true
 
 [fill]
 symbol = ' '
-
-[python]
-style = 'teal'
-symbol = ' '
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-pyenv_version_name = true
-pyenv_prefix = ''
-
-[lua]
-format = '[$symbol($version )]($style)'
-symbol = ' '
-
-[nodejs]
-style = 'blue'
-symbol = ' '
-
-[golang]
-style = 'blue'
-symbol = ' '
-
-[haskell]
-style = 'blue'
-symbol = ' '
-
-[rust]
-style = 'orange'
-symbol = ' '
-
-[ruby]
-style = 'blue'
-symbol = ' '
-
-[java]
-symbol = '🌟 '
-
-[package]
-symbol = '󰏗 '
-
-[aws]
-symbol = ' '
-style = 'yellow'
-format = '[$symbol($profile )(\[$region\] )(\[$duration\] )]($style)'
-
-[docker_context]
-symbol = ' '
-style = 'fg:#06969A'
-format = '[$symbol]($style) $path'
-detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
-detect_extensions = ['Dockerfile']
 
 [kubernetes]
 symbol = '☸ '
@@ -102,10 +39,16 @@ format = '[$symbol$context( \($namespace\))]($style) '
 disabled = false
 
 [jobs]
-symbol = ' '
+symbol = ' '
 style = 'red'
 number_threshold = 1
 format = '[$symbol]($style)'
+
+[time]
+disabled = false
+style = 'fg:gray'
+format = '[$time]($style) '
+time_format = '%H:%M:%S'
 
 [cmd_duration]
 min_time = 500
@@ -137,17 +80,3 @@ yellow='#e5c07b'
 gray='#828997'
 white ='#abb2bf'
 black='#2c323c'
-
-[custom.memory_usage]
-command = "memory_pressure | grep 'System-wide memory free percentage' | awk '{print 100 - $5}' | sed 's/%//' || echo '0'"
-when = true
-symbol = '󰍛 '
-style = 'bold fg:purple'
-format = '[$symbol$output%]($style) '
-
-[custom.cpu_usage]
-command = "top -l 1 | grep 'CPU usage' | awk '{printf \"%.1f\", 100 - $7}' || echo '0'"
-when = true
-symbol = '󰘚 '
-style = 'bold fg:orange'
-format = '[$symbol$output%]($style) '

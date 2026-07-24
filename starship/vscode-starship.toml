@@ -3,15 +3,7 @@ $directory\
 $git_branch\
 $git_status\
 $fill\
-$python\
-$lua\
-$nodejs\
-$golang\
-$haskell\
-$rust\
-$ruby\
-$aws\
-$docker_context\
+$kubernetes\
 $jobs\
 $cmd_duration\
 $line_break\
@@ -19,6 +11,7 @@ $character"""
 
 add_newline = true
 palette = "nord"
+command_timeout = 2000
 
 [directory]
 style = 'bold blue'
@@ -39,48 +32,11 @@ format = '([$all_status$ahead_behind]($style) )'
 [fill]
 symbol = ' '
 
-[python]
-style = 'cyan'
-symbol = 'py:'
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-pyenv_version_name = true
-pyenv_prefix = ''
-
-[lua]
-format = '[$symbol($version )]($style)'
-symbol = 'lua:'
-
-[nodejs]
-style = 'blue'
-symbol = 'node:'
-
-[golang]
-style = 'blue'
-symbol = 'go:'
-
-[haskell]
-style = 'blue'
-symbol = 'hs:'
-
-[rust]
-style = 'yellow'
-symbol = 'rs:'
-
-[ruby]
-style = 'blue'
-symbol = 'rb:'
-
-[aws]
-symbol = 'aws:'
-style = 'yellow'
-format = '[$symbol($profile )(\[$region\] )(\[$duration\] )]($style)'
-
-[docker_context]
-symbol = 'docker:'
-style = 'blue'
-format = '[$symbol]($style) $path'
-detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
-detect_extensions = ['Dockerfile']
+[kubernetes]
+symbol = '☸ '
+style = 'cyan bold'
+format = '[$symbol$context( \($namespace\))]($style) '
+disabled = false
 
 [jobs]
 symbol = 'jobs:'
@@ -122,17 +78,3 @@ yellow='#e5c07b'
 gray='#828997'
 white ='#abb2bf'
 black='#2c323c'
-
-[memory_usage]
-disabled = false
-threshold = -1
-symbol = 'mem:'
-style = 'bold cyan'
-format = '[$symbol${ram}]($style) '
-
-[custom.cpu_usage]
-command = "top -l 1 | grep 'CPU usage' | awk '{print $3}' | sed 's/%//' || echo '0'"
-when = true
-symbol = 'cpu:'
-style = 'bold yellow'
-format = '[$symbol$output%]($style) '

@@ -11,6 +11,7 @@ alias srcz='source ~/.zshrc'
 alias ll="ls -la --color=auto"
 alias dsk='cd ~/Desktop'
 alias cfg='cd ~/.config'
+alias lassie="cd ~/dd/dd-source/domains/odp/apps/apis/lassie-ng/"
 
 # shortcuts for specific technologies, e.g. k8, bazel, go
 alias claudeyolo="claude --dangerously-skip-permissions"
@@ -71,6 +72,14 @@ export NVIM_THEME="nord"
 export STARSHIP_THEME="nord"
 export WEZTERM_THEME="nord"
  
+# dd auth helpers - run dd-auth and export creds into current shell
+function ddstagingcreds() {
+  eval $(dd-auth --domain ddstaging.datadoghq.com -o)
+}
+function ddprodcreds() {
+  eval $(dd-auth --domain app.datadoghq.com -o)
+}
+
 # git shortcuts
 alias lg="lazygit"
 alias ga="git add -A"
@@ -80,7 +89,7 @@ export SSH_AUTH_SOCK=$(launchctl getenv SSH_AUTH_SOCK)
 export SSH_AUTH_SOCK=$(lsof -U -a -c ssh-agent 2>/dev/null | grep Listeners | awk '{print $NF}' | head -1)
 
 alias gb="git branch"
-alias gl="git log --oneline -n 50"
+alias gl="git log --oneline -n 20"
 alias gcm="git checkout main 2>/dev/null || git checkout master"
 alias gpush='git push origin $(git branch --show-current)'
 function gc() {
@@ -133,11 +142,12 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 
 # fzf key bindings (Ctrl+R for history search, etc.)
-source <(fzf --zsh)
+source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
+source $(brew --prefix)/opt/fzf/shell/completion.zsh
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+export PATH=$PATH:$(go env GOPATH)/bin
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
